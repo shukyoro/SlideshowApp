@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     // タイマー
     var timer: Timer!
     // タイマー再生/停止を判別する変数
-    var isTimerState = false
+    var timerEnable = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,10 +32,10 @@ class ViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // スライドショー時はタイマーを停止
-        if isTimerState {
+        if timerEnable {
             self.timer.invalidate()
         }
-        self.isTimerState = false
+        self.timerEnable = false
         
         playButton.isEnabled = true
         backButton.isEnabled = true
@@ -84,9 +84,9 @@ class ViewController: UIViewController {
     // スライドショー再生、停止
     @IBAction func playStopImage(_ sender: Any) {
         // スライドショー再生していないとき
-        if isTimerState == false {
-            // タイマー状態をスタートに
-            self.isTimerState = true
+        if timerEnable == false {
+            // タイマー状態を有効に
+            self.timerEnable = true
             // タイマースタート
             self.timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(updateTimer(_:)), userInfo: nil, repeats: true)
             
@@ -96,8 +96,8 @@ class ViewController: UIViewController {
             // ボタンのラベルを　停止　へ変更
             playStopButton.setTitle("停止", for: .normal)
         } else {
-            // タイマー状態を停止に
-            self.isTimerState = false
+            // タイマー状態を無効に
+            self.timerEnable = false
             // タイマー停止
             self.timer.invalidate()
             
